@@ -58,7 +58,7 @@
 
 ### 方式一：下载预编译版本（推荐）
 
-1. 前往 [Releases](https://github.com/your-username/hosts-manager/releases) 页面下载最新版本
+1. 前往 [Releases](https://github.com/cityck123/hosts-manager/releases) 页面下载最新版本
 2. 运行 `Hosts文件管理器 Setup 1.0.0.exe` 进行安装
 3. 启动程序，享受便捷的Hosts管理体验
 
@@ -66,7 +66,7 @@
 
 1. **克隆项目**
    ```bash
-   git clone https://github.com/your-username/hosts-manager.git
+   git clone https://github.com/cityck123/hosts-manager.git
    cd hosts-manager
    ```
 
