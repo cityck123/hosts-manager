@@ -1,3 +1,5 @@
+<img width="1179" height="789" alt="image" src="https://github.com/user-attachments/assets/4be72415-ca49-410a-bf5a-abc5b365d1ee" />
+
 # Hosts文件管理器
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
