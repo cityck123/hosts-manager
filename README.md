@@ -1,4 +1,4 @@
-<img width="1179" height="789" alt="image" src="https://github.com/user-attachments/assets/4be72415-ca49-410a-bf5a-abc5b365d1ee" />
+<img width="1184" height="788" alt="image" src="https://github.com/user-attachments/assets/790f26cb-571c-47aa-927c-445e722224dc" />
 
 # Hosts文件管理器
 
