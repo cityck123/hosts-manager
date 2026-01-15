@@ -216,18 +216,42 @@ ipcMain.handle('update-host', async (event, oldHost, newHost) => {
   }
 });
 
-ipcMain.handle('delete-host', async (event, host) => {
+// 简化删除操作的IPC处理，只传递ID
+ipcMain.handle('delete-host', async (event, hostId) => {
   try {
-    const result = await hostsService.deleteHost(host);
+    // 直接在服务端查找host对象
+    const readResult = await hostsService.readHostsFile();
+    if (!readResult.success) {
+      return readResult;
+    }
+    
+    const hostToDelete = readResult.hosts.find(host => host.id === hostId);
+    if (!hostToDelete) {
+      return { success: false, error: '未找到要删除的记录' };
+    }
+    
+    const result = await hostsService.deleteHost(hostToDelete);
     return result;
   } catch (error) {
     return { success: false, error: error.message };
   }
 });
 
-ipcMain.handle('delete-hosts', async (event, hosts) => {
+// 批量删除也只传递ID数组
+ipcMain.handle('delete-hosts', async (event, hostIds) => {
   try {
-    const result = await hostsService.deleteHosts(hosts);
+    // 直接在服务端查找所有要删除的host对象
+    const readResult = await hostsService.readHostsFile();
+    if (!readResult.success) {
+      return readResult;
+    }
+    
+    const hostsToDelete = hostIds.map(id => readResult.hosts.find(host => host.id === id)).filter(Boolean);
+    if (hostsToDelete.length === 0) {
+      return { success: false, error: '未找到要删除的记录' };
+    }
+    
+    const result = await hostsService.deleteHosts(hostsToDelete);
     return result;
   } catch (error) {
     return { success: false, error: error.message };

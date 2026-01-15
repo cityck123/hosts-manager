@@ -526,7 +526,8 @@ async function deleteHost(host) {
     });
     
     if (confirmed === 0) {
-      const result = await window.electronAPI.deleteHost(host);
+      // 只传递host的ID，避免序列化问题
+      const result = await window.electronAPI.deleteHost(host.id);
       if (result.success) {
         ElMessage.success('删除成功');
         await loadHosts();
@@ -537,6 +538,7 @@ async function deleteHost(host) {
     }
   } catch (error) {
     ElMessage.error('删除时发生错误: ' + error.message);
+    console.error('详细错误信息:', error);
   }
 }
 
@@ -547,7 +549,10 @@ function handleBatchDelete() {
 
 async function confirmDelete() {
   try {
-    const result = await window.electronAPI.deleteHosts(selectedHosts.value);
+    // 只传递host的ID数组，避免序列化问题
+    const hostIds = selectedHosts.value.map(host => host.id);
+    
+    const result = await window.electronAPI.deleteHosts(hostIds);
     if (result.success) {
       ElMessage.success(`成功删除 ${deleteCount.value} 条记录`);
       confirmDialogVisible.value = false;
@@ -559,6 +564,7 @@ async function confirmDelete() {
     }
   } catch (error) {
     ElMessage.error('批量删除时发生错误: ' + error.message);
+    console.error('详细错误信息:', error);
   }
 }
 
@@ -584,6 +590,9 @@ async function handleRestoreBackup() {
   if (!selectedBackup.value) return;
   
   try {
+    // 提取需要的属性，避免传递完整对象
+    const backupPath = selectedBackup.value.path;
+    
     const confirmed = await window.electronAPI.confirmDialog({
       type: 'warning',
       title: '确认恢复',
@@ -595,7 +604,8 @@ async function handleRestoreBackup() {
     });
     
     if (confirmed === 0) {
-      const result = await window.electronAPI.restoreBackup(selectedBackup.value.path);
+      // 只传递需要的路径字符串
+      const result = await window.electronAPI.restoreBackup(backupPath);
       if (result.success) {
         ElMessage.success('备份恢复成功');
         await loadHosts();
@@ -607,6 +617,7 @@ async function handleRestoreBackup() {
     }
   } catch (error) {
     ElMessage.error('恢复备份时发生错误: ' + error.message);
+    console.error('详细错误信息:', error);
   }
 }
 

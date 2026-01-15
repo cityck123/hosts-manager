@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "electron": "electron .",
-    "electron:dev": "electron .",
+    "electron:dev": "vite build && electron .",
     "electron:build": "electron-builder",
     "postinstall": "electron-builder install-app-deps"
   },
